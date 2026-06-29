@@ -36,59 +36,59 @@ export function Header() {
           : 'bg-transparent'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0">
-            <div className="h-10 md:h-11 w-10 md:w-11 rounded-full overflow-hidden shrink-0">
-              <img
-                src="/logo.png"
-                alt="I Got You Car Wash & Detailing"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </Link>
-
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={cn(
-                  'text-sm font-medium transition-colors',
-                  location.pathname === link.to
-                    ? 'text-brand-gold'
-                    : 'text-white/80 hover:text-white'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-3">
-            <a href="tel:3055821444">
-              <Button variant="outline" size="sm" className="gap-2">
-                <Phone className="h-4 w-4" />
-                (305) 582-1444
-              </Button>
-            </a>
-            <a href="sms:3055821444">
-              <Button size="sm">Book / Text</Button>
-            </a>
+      <div className="relative flex w-full items-center h-16 md:h-20 pl-3 pr-3 sm:pl-4 sm:pr-4 lg:pl-5 lg:pr-5">
+        {/* Logo — flush left */}
+        <Link to="/" className="relative z-10 shrink-0">
+          <div className="h-10 md:h-11 w-10 md:w-11 rounded-full overflow-hidden">
+            <img
+              src="/logo.png"
+              alt="I Got You Car Wash & Detailing"
+              className="h-full w-full object-cover"
+            />
           </div>
+        </Link>
 
-          {/* Mobile menu toggle */}
-          <button
-            className="md:hidden text-white p-2 -mr-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+        {/* Desktop nav — viewport-centered */}
+        <nav className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex items-center gap-5 lg:gap-7">
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={cn(
+                'whitespace-nowrap text-sm font-medium transition-colors lg:text-[15px]',
+                location.pathname === link.to
+                  ? 'text-brand-gold'
+                  : 'text-white/80 hover:text-white'
+              )}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Desktop CTAs — flush right */}
+        <div className="relative z-10 ml-auto hidden md:flex items-center gap-2 lg:gap-3">
+          <a href="tel:3055821444">
+            <Button variant="outline" size="sm" className="gap-2 whitespace-nowrap">
+              <Phone className="h-4 w-4" />
+              (305) 582-1444
+            </Button>
+          </a>
+          <a href="sms:3055821444">
+            <Button size="sm" className="whitespace-nowrap">
+              Book / Text
+            </Button>
+          </a>
         </div>
+
+        {/* Mobile menu toggle */}
+        <button
+          className="relative z-10 ml-auto md:hidden text-white p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+        >
+          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
 
       {/* Mobile menu */}
