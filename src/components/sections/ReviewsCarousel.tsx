@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { googleReviews, GOOGLE_MAPS_URL } from '@/data/reviews'
 import { cn } from '@/lib/utils'
@@ -15,20 +16,50 @@ function StarRating({ count }: { count: number }) {
 }
 
 export function ReviewsCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-    slidesToScroll: 1,
-    breakpoints: {
-      '(min-width: 768px)': { slidesToScroll: 2 },
-      '(min-width: 1024px)': { slidesToScroll: 3 },
+  const autoplay = useRef(
+    Autoplay({
+      delay: 5000,
+      stopOnMouseEnter: true,
+      stopOnInteraction: false,
+    })
+  )
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: 'start',
+      slidesToScroll: 1,
+      breakpoints: {
+        '(min-width: 768px)': { slidesToScroll: 2 },
+        '(min-width: 1024px)': { slidesToScroll: 3 },
+      },
     },
-  })
+    [autoplay.current]
+  )
 
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi])
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi])
+  const resetAutoplay = useCallback(() => {
+    autoplay.current?.reset()
+  }, [])
+
+  const scrollPrev = useCallback(() => {
+    emblaApi?.scrollPrev()
+    resetAutoplay()
+  }, [emblaApi, resetAutoplay])
+
+  const scrollNext = useCallback(() => {
+    emblaApi?.scrollNext()
+    resetAutoplay()
+  }, [emblaApi, resetAutoplay])
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      emblaApi?.scrollTo(index)
+      resetAutoplay()
+    },
+    [emblaApi, resetAutoplay]
+  )
 
   useEffect(() => {
     if (!emblaApi) return
@@ -127,7 +158,7 @@ export function ReviewsCarousel() {
           {googleReviews.map((_, i) => (
             <button
               key={i}
-              onClick={() => emblaApi?.scrollTo(i)}
+              onClick={() => scrollTo(i)}
               className={cn(
                 'w-2 h-2 rounded-full transition-all',
                 i === selectedIndex ? 'bg-brand-gold w-5' : 'bg-white/20'
