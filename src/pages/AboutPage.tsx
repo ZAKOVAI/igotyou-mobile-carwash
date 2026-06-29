@@ -1,6 +1,6 @@
 import { Star, Shield, Sun, Droplets, Award } from 'lucide-react'
 import { CtaBanner } from '@/components/sections/CtaBanner'
-import { GOOGLE_MAPS_URL } from '@/data/reviews'
+import { GOOGLE_MAPS_URL, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 
 const values = [
   {
@@ -115,7 +115,7 @@ export function AboutPage() {
                   </div>
                 </div>
                 <p className="text-brand-gray text-sm">
-                  7 verified reviews on Google. Tap to see them.
+                  {GOOGLE_REVIEW_COUNT} verified reviews on Google. Tap to see them.
                 </p>
               </a>
 

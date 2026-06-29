@@ -1,6 +1,7 @@
 import { Phone, MessageSquare, Star, ShieldCheck, Droplets, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
+import { GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 
 export function Hero() {
   return (
@@ -43,7 +44,7 @@ export function Hero() {
               ))}
             </div>
             <span className="text-white text-sm font-medium">5.0 on Google</span>
-            <span className="text-white/60 text-sm">7 reviews</span>
+            <span className="text-white/60 text-sm">{GOOGLE_REVIEW_COUNT} reviews</span>
           </div>
 
           <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white leading-none tracking-tight mb-4">

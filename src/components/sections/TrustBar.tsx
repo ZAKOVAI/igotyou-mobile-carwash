@@ -1,11 +1,11 @@
 import { Star, ShieldCheck, Droplets, MapPin, Clock } from 'lucide-react'
-import { GOOGLE_MAPS_URL } from '@/data/reviews'
+import { GOOGLE_MAPS_URL, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 
 const trustItems = [
   {
     icon: Star,
     title: '5.0 on Google',
-    subtitle: '7 verified reviews',
+    subtitle: `${GOOGLE_REVIEW_COUNT} verified reviews`,
     href: GOOGLE_MAPS_URL,
   },
   {

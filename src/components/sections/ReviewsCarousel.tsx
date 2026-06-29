@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { Star, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
-import { googleReviews, GOOGLE_MAPS_URL } from '@/data/reviews'
-import { cn } from '@/lib/utils'
+import { googleReviews, GOOGLE_MAPS_URL, GOOGLE_REVIEW_COUNT } from '@/data/reviews'
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -53,14 +52,6 @@ export function ReviewsCarousel() {
     resetAutoplay()
   }, [emblaApi, resetAutoplay])
 
-  const scrollTo = useCallback(
-    (index: number) => {
-      emblaApi?.scrollTo(index)
-      resetAutoplay()
-    },
-    [emblaApi, resetAutoplay]
-  )
-
   useEffect(() => {
     if (!emblaApi) return
     const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap())
@@ -93,7 +84,7 @@ export function ReviewsCarousel() {
               What Our Customers Say
             </h2>
             <p className="text-brand-gray mt-1 text-sm">
-              Tap any review to verify on Google.
+              {GOOGLE_REVIEW_COUNT} verified Google reviews. Tap any review to verify.
             </p>
           </div>
           <div className="flex gap-2 shrink-0">
@@ -117,9 +108,9 @@ export function ReviewsCarousel() {
         {/* Carousel */}
         <div className="overflow-hidden" ref={emblaRef}>
           <div className="flex gap-4">
-            {googleReviews.map((review) => (
+            {googleReviews.map((review, index) => (
               <div
-                key={review.name}
+                key={`${review.name}-${index}`}
                 className="flex-[0_0_100%] md:flex-[0_0_calc(50%-8px)] lg:flex-[0_0_calc(33.333%-11px)] min-w-0"
               >
                 <a
@@ -153,19 +144,11 @@ export function ReviewsCarousel() {
           </div>
         </div>
 
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {googleReviews.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              className={cn(
-                'w-2 h-2 rounded-full transition-all',
-                i === selectedIndex ? 'bg-brand-gold w-5' : 'bg-white/20'
-              )}
-              aria-label={`Go to review ${i + 1}`}
-            />
-          ))}
+        {/* Position indicator */}
+        <div className="flex justify-center mt-6">
+          <span className="text-brand-gray text-sm">
+            Review {selectedIndex + 1} of {GOOGLE_REVIEW_COUNT}
+          </span>
         </div>
       </div>
     </section>
