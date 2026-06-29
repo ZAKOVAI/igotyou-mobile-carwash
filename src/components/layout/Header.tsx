@@ -39,7 +39,7 @@ export function Header() {
       <div className="relative flex w-full items-center h-16 md:h-20 pl-3 pr-3 sm:pl-4 sm:pr-4 lg:pl-5 lg:pr-5">
         {/* Logo — flush left */}
         <Link to="/" className="relative z-10 shrink-0">
-          <div className="h-10 md:h-11 w-10 md:w-11 rounded-full overflow-hidden">
+          <div className="h-11 md:h-[52px] w-11 md:w-[52px] rounded-full overflow-hidden">
             <img
               src="/logo.png"
               alt="I Got You Car Wash & Detailing"
